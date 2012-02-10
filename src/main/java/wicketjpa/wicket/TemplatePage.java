@@ -15,9 +15,9 @@ public class TemplatePage extends WebPage {
 
     public TemplatePage() {
         add(new Label("userName", new PropertyModel(this, "session.user.name")));
-        add(new BookmarkablePageLink("search", MainPage.class));
-        add(new BookmarkablePageLink("settings", PasswordPage.class));
-        add(new BookmarkablePageLink("logout", LogoutPage.class));
+        add(new BookmarkablePageLink<Void>("search", MainPage.class));
+        add(new BookmarkablePageLink<Void>("settings", PasswordPage.class));
+        add(new BookmarkablePageLink<Void>("logout", LogoutPage.class));
     }
 
     protected EntityManager getEntityManager() {

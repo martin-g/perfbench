@@ -15,19 +15,19 @@ public class PasswordPage extends TemplatePage {
         add(new PasswordForm("form"));
     }
 
-    private class PasswordForm extends Form {
+    private class PasswordForm extends Form<User> {
 
         private User user = getBookingSession().getUser();
 
         public PasswordForm(String id) {
             super(id);
-            setModel(new CompoundPropertyModel(user));
+            setModel(new CompoundPropertyModel<User>(user));
             FormComponent passwordField = new PasswordTextField("password");            
             add(new EditBorder("passwordBorder", passwordField));
-            FormComponent verifyField = new PasswordTextField("verify", new Model(""));
+            FormComponent verifyField = new PasswordTextField("verify", Model.of(""));
             add(new EditBorder("verifyBorder", verifyField));            
             add(new EqualPasswordInputValidator(passwordField, verifyField));            
-            add(new BookmarkablePageLink("cancel", MainPage.class));
+            add(new BookmarkablePageLink<Void>("cancel", MainPage.class));
         }
 
         @Override

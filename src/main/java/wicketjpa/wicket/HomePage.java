@@ -26,14 +26,14 @@ public class HomePage extends WebPage {
 
     private static class LoginForm extends StatelessForm {
 
-        private TextField username = new TextField("username", new Model(""));
-        private TextField password = new PasswordTextField("password", new Model(""));
+        private TextField username = new TextField<String>("username", Model.of(""));
+        private TextField password = new PasswordTextField("password", Model.of(""));
 
         public LoginForm(String id) {
             super(id);            
             add(username);            
             add(password.setRequired(false));
-            add(new BookmarkablePageLink("register", RegisterPage.class));
+            add(new BookmarkablePageLink<Void>("register", RegisterPage.class));
             add(new FeedbackPanel("messages"));
         }
 

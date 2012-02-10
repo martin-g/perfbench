@@ -147,7 +147,7 @@ public class MainPage extends TemplatePage {
                     refreshHotelsContainer(target);
                 }                
             });
-            add(new DropDownChoice("pageSize", pageSizes));
+            add(new DropDownChoice<Integer>("pageSize", pageSizes));
             add(new AjaxButton("submit") {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form form) {                    

@@ -20,23 +20,23 @@ public class RegisterPage extends WebPage {
         setStatelessHint(true);
     }
 
-    private class RegisterForm extends StatelessForm {
+    private class RegisterForm extends StatelessForm<User> {
 
         private User user = new User();        
         private FormComponent username;
 
         public RegisterForm(String id) {
             super(id);
-            setModel(new CompoundPropertyModel(user));
+            setModel(new CompoundPropertyModel<User>(user));
             username = new TextField("username").setRequired(true);
             add(new EditBorder("usernameBorder", username, true));
             add(new EditBorder("nameBorder", new TextField("name").setRequired(true), true));
             FormComponent passwordField = new PasswordTextField("password").setRequired(true);            
             add(new EditBorder("passwordBorder", passwordField));
-            FormComponent verifyField = new PasswordTextField("verify", new Model(""));
+            FormComponent verifyField = new PasswordTextField("verify", Model.of(""));
             add(new EditBorder("verifyBorder", verifyField));
             add(new EqualPasswordInputValidator(passwordField, verifyField));
-            add(new BookmarkablePageLink("cancel", HomePage.class));
+            add(new BookmarkablePageLink<Void>("cancel", HomePage.class));
         }
 
         @Override

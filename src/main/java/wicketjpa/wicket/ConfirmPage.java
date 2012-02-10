@@ -10,7 +10,7 @@ import wicketjpa.entity.Booking;
 public class ConfirmPage extends TemplatePage {
 
     public ConfirmPage(final Booking booking) {
-        setDefaultModel(new CompoundPropertyModel(booking));
+        setDefaultModel(new CompoundPropertyModel<Booking>(booking));
         add(new Label("hotel.name"));
         add(new Label("hotel.address"));
         add(new Label("hotel.city"));
@@ -26,7 +26,7 @@ public class ConfirmPage extends TemplatePage {
             public void onSubmit() {                
                 getEntityManager().persist(booking);
                 BookingSession session = getBookingSession();
-                session.info(String.format("Thank you, %s, your confimation number for %s is %s",
+                session.info(String.format("Thank you, %s, your confirmation number for %s is %s",
                         session.getUser().getName(), booking.getHotel().getName(), booking.getId()));
                 logger.info("New booking: {} for {}", booking.getId(), session.getUser().getUsername());
                 loadBookings();
@@ -41,6 +41,6 @@ public class ConfirmPage extends TemplatePage {
                 setResponsePage(new BookPage(booking));
             }
         }.setDefaultFormProcessing(false));
-        form.add(new BookmarkablePageLink("cancel", MainPage.class));
+        form.add(new BookmarkablePageLink<Void>("cancel", MainPage.class));
     }
 }

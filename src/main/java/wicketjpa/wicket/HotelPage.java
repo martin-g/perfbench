@@ -11,7 +11,7 @@ import wicketjpa.entity.Hotel;
 public class HotelPage extends TemplatePage {
 
     public HotelPage(final Hotel hotel) {
-        setDefaultModel(new CompoundPropertyModel(hotel));
+        setDefaultModel(new CompoundPropertyModel<Hotel>(hotel));
         add(new Label("name"));
         add(new Label("address"));
         add(new Label("city"));
@@ -31,6 +31,6 @@ public class HotelPage extends TemplatePage {
             }
         };
         add(form);        
-        form.add(new BookmarkablePageLink("cancel", MainPage.class));
+        form.add(new BookmarkablePageLink<Void>("cancel", MainPage.class));
     }    
 }
