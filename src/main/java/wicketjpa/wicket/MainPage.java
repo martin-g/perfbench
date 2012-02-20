@@ -37,17 +37,22 @@ public class MainPage extends TemplatePage {
 		hotelsContainer = new WebMarkupContainer("hotelsContainer");
 		add(hotelsContainer.setOutputMarkupId(true));
 
-		hotelsContainer.add(new WebMarkupContainer("noResultsContainer") {
+		hotelsContainer.add(new WebMarkupContainer("noResultsContainer")
+		{
 			@Override
-			public boolean isVisible() {
-				return !isHotelsVisible();
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				setVisible(!isHotelsVisible());
 			}
 		});
 
 		WebMarkupContainer hotelsTable = new WebMarkupContainer("hotelsTable") {
 			@Override
-			public boolean isVisible() {
-				return isHotelsVisible();
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				setVisible(isHotelsVisible());
 			}
 		};
 
@@ -78,10 +83,14 @@ public class MainPage extends TemplatePage {
 				session.setPage(session.getPage() + 1);
 				loadHotels();
 			}
+
 			@Override
-			public boolean isVisible() {
+			protected void onConfigure()
+			{
+				super.onConfigure();
 				List<Hotel> hotels = getBookingSession().getHotels();
-				return hotels != null && hotels.size() == getBookingSession().getPageSize();
+				boolean isVisible = hotels != null && hotels.size() == getBookingSession().getPageSize();
+				setVisible(isVisible);
 			}
 		});
 
@@ -91,15 +100,19 @@ public class MainPage extends TemplatePage {
 
 		add(new WebMarkupContainer("noBookingsContainer") {
 			@Override
-			public boolean isVisible() {
-				return !isBookingsVisible();
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				setVisible(!isBookingsVisible());
 			}
 		});
 
 		WebMarkupContainer bookingsTable = new WebMarkupContainer("bookingsTable") {
 			@Override
-			public boolean isVisible() {
-				return isBookingsVisible();
+			protected void onConfigure()
+			{
+				super.onConfigure();
+				setVisible(isBookingsVisible());
 			}
 		};
 
