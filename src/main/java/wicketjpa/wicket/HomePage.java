@@ -17,46 +17,46 @@ import wicketjpa.entity.User;
 
 public class HomePage extends WebPage {
 
-    protected static final Logger logger = LoggerFactory.getLogger(HomePage.class);
+	protected static final Logger logger = LoggerFactory.getLogger(HomePage.class);
 
-    public HomePage() {
-        add(new LoginForm("form"));
-        setStatelessHint(true);
-    }
+	public HomePage() {
+		add(new LoginForm("form"));
+		setStatelessHint(true);
+	}
 
-    private static class LoginForm extends StatelessForm {
+	private static class LoginForm extends StatelessForm {
 
-        private TextField username = new TextField<String>("username", Model.of(""));
-        private TextField password = new PasswordTextField("password", Model.of(""));
+		private TextField username = new TextField<String>("username", Model.of(""));
+		private TextField password = new PasswordTextField("password", Model.of(""));
 
-        public LoginForm(String id) {
-            super(id);            
-            add(username);            
-            add(password.setRequired(false));
-            add(new BookmarkablePageLink<Void>("register", RegisterPage.class));
-            add(new FeedbackPanel("messages"));
-        }
+		public LoginForm(String id) {
+			super(id);
+			add(username);
+			add(password.setRequired(false));
+			add(new BookmarkablePageLink<Void>("register", RegisterPage.class));
+			add(new FeedbackPanel("messages"));
+		}
 
-        @Override
-        protected void onSubmit() {
-            EntityManager em = JpaRequestCycleListener.getEntityManager();
-            Query query = em.createQuery("select u from User u"
-                    + " where u.username = :username and u.password = :password");
-            query.setParameter("username", username.getInput());
-            query.setParameter("password", password.getInput());
-            List<User> users = query.getResultList();
-            if (users.size() == 0) {
-                logger.error("Login failed");
-                error("Login failed");
-                return;
-            }
-            User user = users.get(0);
-            BookingSession session = BookingSession.get();            
-            session.setUser(user);
-            session.bind();
-            logger.info("Login succeeded");
-            session.info("Welcome, " + user.getUsername());
-            setResponsePage(MainPage.class);
-        }        
-    }
+		@Override
+		protected void onSubmit() {
+			EntityManager em = JpaRequestCycleListener.getEntityManager();
+			Query query = em.createQuery("select u from User u"
+					+ " where u.username = :username and u.password = :password");
+			query.setParameter("username", username.getInput());
+			query.setParameter("password", password.getInput());
+			List<User> users = query.getResultList();
+			if (users.size() == 0) {
+				logger.error("Login failed");
+				error("Login failed");
+				return;
+			}
+			User user = users.get(0);
+			BookingSession session = BookingSession.get();
+			session.setUser(user);
+			session.bind();
+			logger.info("Login succeeded");
+			session.info("Welcome, " + user.getUsername());
+			setResponsePage(MainPage.class);
+		}
+	}
 }

@@ -22,17 +22,17 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
 	private static final MetaDataKey<Boolean> END_CONVERSATION_META_DATA_KEY = new MetaDataKey<Boolean>()
 	{
 	};
-	
-    public static EntityManager getEntityManager() {
-	    EntityManager em = RequestCycle.get().getMetaData(ENTITY_MANAGER_META_DATA_KEY);
-        if (em == null) {
-	        EntityManagerFactory emf = BookingApplication.get().getEntityManagerFactory();
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
+
+	public static EntityManager getEntityManager() {
+		EntityManager em = RequestCycle.get().getMetaData(ENTITY_MANAGER_META_DATA_KEY);
+		if (em == null) {
+			EntityManagerFactory emf = BookingApplication.get().getEntityManagerFactory();
+			em = emf.createEntityManager();
+			em.getTransaction().begin();
 			RequestCycle.get().setMetaData(ENTITY_MANAGER_META_DATA_KEY, em);
-        }
-        return em;
-    }
+		}
+		return em;
+	}
 
 	@Override
 	public void onBeginRequest(RequestCycle cycle)
@@ -42,40 +42,40 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
 	}
 
 	@Override
-    public void onEndRequest(RequestCycle cycle) {
-        super.onEndRequest(cycle);
-	    EntityManager em = getEntityManager();
-	    if (em != null) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().commit();
-            }
-            em.close();
-        }
-        if (cycle.getMetaData(END_CONVERSATION_META_DATA_KEY)) {
-	        // this is not implemented in Wicket 1.5
+	public void onEndRequest(RequestCycle cycle) {
+		super.onEndRequest(cycle);
+		EntityManager em = getEntityManager();
+		if (em != null) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().commit();
+			}
+			em.close();
+		}
+		if (cycle.getMetaData(END_CONVERSATION_META_DATA_KEY)) {
+			// this is not implemented in Wicket 1.5
 //            cycle.getRequest().getPage().getPageMap().remove();
-        }
-    }
+		}
+	}
 
-    @Override
-    public IRequestHandler onException(RequestCycle cycle, Exception e) {
-	    EntityManager em = getEntityManager();
-	    if (em != null) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            em.close();
-        }
-        if (e instanceof PageExpiredException) {
-            Session.get().error("The page you requested has expired.");
-	        IPageProvider pageProvider = new PageProvider(new MainPage());
-            return new RenderPageRequestHandler(pageProvider);
-        }
-        return super.onException(cycle, e);
-    }
+	@Override
+	public IRequestHandler onException(RequestCycle cycle, Exception e) {
+		EntityManager em = getEntityManager();
+		if (em != null) {
+			if (em.getTransaction().isActive()) {
+				em.getTransaction().rollback();
+			}
+			em.close();
+		}
+		if (e instanceof PageExpiredException) {
+			Session.get().error("The page you requested has expired.");
+			IPageProvider pageProvider = new PageProvider(new MainPage());
+			return new RenderPageRequestHandler(pageProvider);
+		}
+		return super.onException(cycle, e);
+	}
 
-    public static void endConversation() {
-	    RequestCycle.get().setMetaData(END_CONVERSATION_META_DATA_KEY, Boolean.TRUE);
-    }
+	public static void endConversation() {
+		RequestCycle.get().setMetaData(END_CONVERSATION_META_DATA_KEY, Boolean.TRUE);
+	}
 
 }

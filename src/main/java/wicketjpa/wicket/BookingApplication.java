@@ -26,44 +26,44 @@ public class BookingApplication extends WebApplication {
 	private EntityManagerFactory emf;
 
 	@Override
-    public Class<? extends Page> getHomePage() {
-        return MainPage.class;
-    }
+	public Class<? extends Page> getHomePage() {
+		return MainPage.class;
+	}
 
-    @Override
-    public void init() {
-        super.init();
+	@Override
+	public void init() {
+		super.init();
 
-	    emf = Persistence.createEntityManagerFactory("bookingDatabase");
+		emf = Persistence.createEntityManagerFactory("bookingDatabase");
 
-        getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
+		getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
 
-	        public boolean isActionAuthorized(Component c, Action a) {
-                return true;
-            }
+			public boolean isActionAuthorized(Component c, Action a) {
+				return true;
+			}
 
-	        public boolean isInstantiationAuthorized(Class clazz) {
-                if (TemplatePage.class.isAssignableFrom(clazz)) {
-                    if (BookingSession.get().getUser() == null) {
-                        throw new RestartResponseException(HomePage.class);
-                    }
-                }
-                return true;
-            }
-        });
-        getMarkupSettings().setCompressWhitespace(true);
-        mountPage("/home", HomePage.class);
-        mountPage("/logout", LogoutPage.class);
-        mountPage("/register", RegisterPage.class);
-        mountPage("/settings", PasswordPage.class);
+			public boolean isInstantiationAuthorized(Class clazz) {
+				if (TemplatePage.class.isAssignableFrom(clazz)) {
+					if (BookingSession.get().getUser() == null) {
+						throw new RestartResponseException(HomePage.class);
+					}
+				}
+				return true;
+			}
+		});
+		getMarkupSettings().setCompressWhitespace(true);
+		mountPage("/home", HomePage.class);
+		mountPage("/logout", LogoutPage.class);
+		mountPage("/register", RegisterPage.class);
+		mountPage("/settings", PasswordPage.class);
 
-	    getRequestCycleListeners().add(new JpaRequestCycleListener());
-    }
+		getRequestCycleListeners().add(new JpaRequestCycleListener());
+	}
 
-    @Override
-    public BookingSession newSession(Request request, Response response) {
-        return new BookingSession(request);
-    }
+	@Override
+	public BookingSession newSession(Request request, Response response) {
+		return new BookingSession(request);
+	}
 
 	public final EntityManagerFactory getEntityManagerFactory()
 	{
@@ -75,16 +75,16 @@ public class BookingApplication extends WebApplication {
 		return (BookingApplication) Application.get();
 	}
 
-    @Override
-    protected IConverterLocator newConverterLocator() {
-        ConverterLocator converterLocator = new ConverterLocator();
-        BigDecimalConverter converter = new BigDecimalConverter() {
-            @Override
-            public NumberFormat getNumberFormat(Locale locale) {
-                return DecimalFormat.getCurrencyInstance(Locale.US);
-            }
-        };
-        converterLocator.set(BigDecimal.class, converter);
-        return converterLocator;
-    }
+	@Override
+	protected IConverterLocator newConverterLocator() {
+		ConverterLocator converterLocator = new ConverterLocator();
+		BigDecimalConverter converter = new BigDecimalConverter() {
+			@Override
+			public NumberFormat getNumberFormat(Locale locale) {
+				return DecimalFormat.getCurrencyInstance(Locale.US);
+			}
+		};
+		converterLocator.set(BigDecimal.class, converter);
+		return converterLocator;
+	}
 }

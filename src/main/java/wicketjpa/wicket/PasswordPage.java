@@ -11,30 +11,30 @@ import wicketjpa.entity.User;
 
 public class PasswordPage extends TemplatePage {
 
-    public PasswordPage() {
-        add(new PasswordForm("form"));
-    }
+	public PasswordPage() {
+		add(new PasswordForm("form"));
+	}
 
-    private class PasswordForm extends Form<User> {
+	private class PasswordForm extends Form<User> {
 
-        private User user = getBookingSession().getUser();
+		private User user = getBookingSession().getUser();
 
-        public PasswordForm(String id) {
-            super(id);
-            setModel(new CompoundPropertyModel<User>(user));
-            FormComponent passwordField = new PasswordTextField("password");            
-            add(new EditBorder("passwordBorder", passwordField));
-            FormComponent verifyField = new PasswordTextField("verify", Model.of(""));
-            add(new EditBorder("verifyBorder", verifyField));            
-            add(new EqualPasswordInputValidator(passwordField, verifyField));            
-            add(new BookmarkablePageLink<Void>("cancel", MainPage.class));
-        }
+		public PasswordForm(String id) {
+			super(id);
+			setModel(new CompoundPropertyModel<User>(user));
+			FormComponent passwordField = new PasswordTextField("password");
+			add(new EditBorder("passwordBorder", passwordField));
+			FormComponent verifyField = new PasswordTextField("verify", Model.of(""));
+			add(new EditBorder("verifyBorder", verifyField));
+			add(new EqualPasswordInputValidator(passwordField, verifyField));
+			add(new BookmarkablePageLink<Void>("cancel", MainPage.class));
+		}
 
-        @Override
-        protected void onSubmit() {            
-            getEntityManager().merge(user);
-            getSession().info("Password updated");
-            setResponsePage(MainPage.class);
-        }        
-    }    
+		@Override
+		protected void onSubmit() {
+			getEntityManager().merge(user);
+			getSession().info("Password updated");
+			setResponsePage(MainPage.class);
+		}
+	}
 }

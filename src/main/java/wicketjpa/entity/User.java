@@ -14,52 +14,52 @@ import org.hibernate.validator.Pattern;
 @Table(name = "Customer")
 public class User implements Serializable {
 
-    private String username;
-    private String password;
-    private String name;
+	private String username;
+	private String password;
+	private String name;
 
-    public User(String name, String password, String username) {
-        this.name = name;
-        this.password = password;
-        this.username = username;
-    }
+	public User(String name, String password, String username) {
+		this.name = name;
+		this.password = password;
+		this.username = username;
+	}
 
-    public User() {
-    }
+	public User() {
+	}
 
-    @NotNull
-    @Length(max = 100)
-    public String getName() {
-        return name;
-    }
+	@NotNull
+	@Length(max = 100)
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @NotNull
-    @Length(min = 5, max = 15)
-    public String getPassword() {
-        return password;
-    }
+	@NotNull
+	@Length(min = 5, max = 15)
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    @Id
-    @Length(min = 5, max = 15)
-    @Pattern(regex = "^\\w*$", message = "not a valid username")
-    public String getUsername() {
-        return username;
-    }
+	@Id
+	@Length(min = 5, max = 15)
+	@Pattern(regex = "^\\w*$", message = "not a valid username")
+	public String getUsername() {
+		return username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    @Override
-    public String toString() {
-        return "User(" + username + ")";
-    }
+	@Override
+	public String toString() {
+		return "User(" + username + ")";
+	}
 }
