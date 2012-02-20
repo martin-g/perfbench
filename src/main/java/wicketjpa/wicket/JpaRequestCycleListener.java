@@ -2,7 +2,6 @@ package wicketjpa.wicket;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Session;
@@ -27,7 +26,7 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
     public static EntityManager getEntityManager() {
 	    EntityManager em = RequestCycle.get().getMetaData(ENTITY_MANAGER_META_DATA_KEY);
         if (em == null) {
-	        EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookingDatabase");
+	        EntityManagerFactory emf = BookingApplication.get().getEntityManagerFactory();
             em = emf.createEntityManager();
             em.getTransaction().begin();
 			RequestCycle.get().setMetaData(ENTITY_MANAGER_META_DATA_KEY, em);

@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.apache.wicket.Application;
 import org.apache.wicket.Component;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
@@ -18,7 +23,9 @@ import org.apache.wicket.util.convert.converter.BigDecimalConverter;
 
 public class BookingApplication extends WebApplication {
 
-    @Override
+	private EntityManagerFactory emf;
+
+	@Override
     public Class<? extends Page> getHomePage() {
         return MainPage.class;
     }
@@ -26,6 +33,8 @@ public class BookingApplication extends WebApplication {
     @Override
     public void init() {
         super.init();
+
+	    emf = Persistence.createEntityManagerFactory("bookingDatabase");
 
         getSecuritySettings().setAuthorizationStrategy(new IAuthorizationStrategy() {
 
@@ -56,10 +65,15 @@ public class BookingApplication extends WebApplication {
         return new BookingSession(request);
     }
 
-//    @Override
-//    protected ISessionStore newSessionStore() {
-//        return new HttpSessionStore(this);
-//    }
+	public final EntityManagerFactory getEntityManagerFactory()
+	{
+		return emf;
+	}
+
+	public static BookingApplication get()
+	{
+		return (BookingApplication) Application.get();
+	}
 
     @Override
     protected IConverterLocator newConverterLocator() {
