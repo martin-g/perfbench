@@ -75,7 +75,7 @@ public class EditBorder extends Border {
 			fc.add(new AjaxFormComponentUpdatingBehavior("onblur") {
 				@Override
 				protected void onUpdate(AjaxRequestTarget target) {
-					getFormComponent().validate();
+					getFormComponent().validate(); // TODO why this is needed ?!
 					target.add(EditBorder.this);
 				}
 				@Override
