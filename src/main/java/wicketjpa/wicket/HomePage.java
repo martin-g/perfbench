@@ -23,7 +23,6 @@ public class HomePage extends WebPage {
 
 	public HomePage() {
 		add(new LoginForm("form"));
-		setStatelessHint(true);
 	}
 
 	private static class LoginForm extends StatelessForm {
