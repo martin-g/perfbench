@@ -1,14 +1,12 @@
 package wicketjpa.wicket;
 
-import org.apache.wicket.Session;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import wicketjpa.entity.Hotel;
-import wicketjpa.entity.Booking;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
+import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.IAjaxIndicatorAware;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -24,6 +22,9 @@ import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import wicketjpa.entity.Booking;
+import wicketjpa.entity.Hotel;
 
 public class MainPage extends TemplatePage {
 
