@@ -16,6 +16,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.authorization.Action;
 import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.devutils.stateless.StatelessChecker;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -58,6 +59,12 @@ public class BookingApplication extends WebApplication {
 		mountPage("/settings", PasswordPage.class);
 
 		getRequestCycleListeners().add(new JpaRequestCycleListener());
+		
+		if (usesDevelopmentConfig())
+		{
+			getDebugSettings().setDevelopmentUtilitiesEnabled(true);
+			getComponentPostOnBeforeRenderListeners().add(new StatelessChecker());
+		}
 	}
 
 	@Override
