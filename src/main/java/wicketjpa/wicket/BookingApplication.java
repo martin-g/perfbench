@@ -54,6 +54,7 @@ public class BookingApplication extends WebApplication {
 		});
 		getMarkupSettings().setCompressWhitespace(true);
 		mountPage("/home", HomePage.class);
+		mountPage("/hotel/${id}", HotelPage.class);
 		mountPage("/logout", LogoutPage.class);
 		mountPage("/register", RegisterPage.class);
 		mountPage("/settings", PasswordPage.class);

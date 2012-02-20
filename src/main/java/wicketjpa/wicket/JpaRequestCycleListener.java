@@ -12,6 +12,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.IPageProvider;
 import org.apache.wicket.request.handler.PageProvider;
 import org.apache.wicket.request.handler.RenderPageRequestHandler;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 public class JpaRequestCycleListener extends AbstractRequestCycleListener
 {
@@ -49,7 +50,9 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().commit();
 			}
-			em.close();
+			if (em.isOpen()) {
+				em.close();
+			}
 		}
 		if (cycle.getMetaData(END_CONVERSATION_META_DATA_KEY)) {
 			// this is not implemented in Wicket 1.5
@@ -68,7 +71,7 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
 		}
 		if (e instanceof PageExpiredException) {
 			Session.get().error("The page you requested has expired.");
-			IPageProvider pageProvider = new PageProvider(new MainPage());
+			IPageProvider pageProvider = new PageProvider(new MainPage(new PageParameters()));
 			return new RenderPageRequestHandler(pageProvider);
 		}
 		return super.onException(cycle, e);

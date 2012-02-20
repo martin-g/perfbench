@@ -7,11 +7,13 @@ import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import wicketjpa.entity.User;
 
 public class PasswordPage extends TemplatePage {
 
-	public PasswordPage() {
+	public PasswordPage(final PageParameters parameters) {
+		super(parameters);
 		add(new PasswordForm("form"));
 	}
 

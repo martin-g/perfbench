@@ -15,6 +15,7 @@ import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.AbstractValidator;
@@ -32,6 +33,7 @@ public class BookPage extends TemplatePage {
 	private Booking booking;
 
 	public BookPage(Booking booking) {
+		super(new PageParameters());
 		this.booking = booking;
 		setDefaultModel(new CompoundPropertyModel<Booking>(booking));
 		add(new Label("hotel.name"));

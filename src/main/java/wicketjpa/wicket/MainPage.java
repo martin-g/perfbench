@@ -1,6 +1,7 @@
 package wicketjpa.wicket;
 
 import org.apache.wicket.Session;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import wicketjpa.entity.Hotel;
 import wicketjpa.entity.Booking;
 import java.util.Arrays;
@@ -30,7 +31,8 @@ public class MainPage extends TemplatePage {
 
 	private WebMarkupContainer hotelsContainer;
 
-	public MainPage() {
+	public MainPage(PageParameters parameters) {
+		super(parameters);
 		setDefaultModel(new CompoundPropertyModel<Session>(new PropertyModel<Session>(this, "session")));
 		add(new FeedbackPanel("messages"));
 		add(new SearchForm("form"));
@@ -70,7 +72,9 @@ public class MainPage extends TemplatePage {
 				item.add(new Link<Hotel>("view", item.getModel()) {
 					@Override
 					public void onClick() {
-						setResponsePage(new HotelPage(getModelObject()));
+						PageParameters parameters = new PageParameters();
+						parameters.set("id", getModelObject().getId());
+						setResponsePage(HotelPage.class, parameters);
 					}
 				});
 			}

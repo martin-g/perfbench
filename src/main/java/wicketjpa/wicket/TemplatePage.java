@@ -6,6 +6,7 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +14,8 @@ public class TemplatePage extends WebPage {
 
 	protected static final Logger logger = LoggerFactory.getLogger(TemplatePage.class);
 
-	public TemplatePage() {
+	public TemplatePage(final PageParameters parameters) {
+		super(parameters);
 		add(new Label("userName", new PropertyModel(this, "session.user.name")));
 		add(new BookmarkablePageLink<Void>("search", MainPage.class));
 		add(new BookmarkablePageLink<Void>("settings", PasswordPage.class));

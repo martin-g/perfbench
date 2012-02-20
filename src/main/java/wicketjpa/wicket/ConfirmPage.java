@@ -5,11 +5,13 @@ import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import wicketjpa.entity.Booking;
 
 public class ConfirmPage extends TemplatePage {
 
 	public ConfirmPage(final Booking booking) {
+		super(new PageParameters());
 		setDefaultModel(new CompoundPropertyModel<Booking>(booking));
 		add(new Label("hotel.name"));
 		add(new Label("hotel.address"));
