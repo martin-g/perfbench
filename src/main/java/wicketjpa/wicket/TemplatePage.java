@@ -10,7 +10,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TemplatePage extends WebPage {
+public abstract class TemplatePage extends WebPage {
 
 	protected static final Logger logger = LoggerFactory.getLogger(TemplatePage.class);
 
@@ -26,6 +26,7 @@ public class TemplatePage extends WebPage {
 		return JpaRequestCycleListener.getEntityManager();
 	}
 
+	// TODO fix me or remove me!
 	protected void endConversation() {
 		JpaRequestCycleListener.endConversation();
 	}
