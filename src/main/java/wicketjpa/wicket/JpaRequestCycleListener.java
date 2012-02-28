@@ -67,7 +67,9 @@ public class JpaRequestCycleListener extends AbstractRequestCycleListener
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
-			em.close();
+			if (em.isOpen()) {
+				em.close();
+			}
 		}
 		if (e instanceof PageExpiredException) {
 			Session.get().error("The page you requested has expired.");
